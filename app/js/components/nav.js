@@ -45,7 +45,7 @@ class Nav extends React.Component {
             <LoginButton className="loginButton"/>
             <div className="navButtonGroup">
               <Router.Link to="home"><button className="navButton2 fa fa-home"> Home</button></Router.Link>
-              <Router.Link to="who"><button className="navButton2 fa fa-arrows"> Control Panel</button></Router.Link>
+              <Router.Link to="control"><button className="navButton2 fa fa-arrows"> Control Panel</button></Router.Link>
             </div>
           </div>
         </div>

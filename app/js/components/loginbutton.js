@@ -20,7 +20,7 @@ class LoginButton extends React.Component {
     this.state = {
       open:false,
       header:false,
-      login:'login'
+      login:false
     }
   }
   componentDidMount() {
@@ -28,7 +28,7 @@ class LoginButton extends React.Component {
     ModalStore.addChangeListener(this.close);
     HomeStore.addChangeListener(this.changeHeaderState);
     if(UserProfile.isLoggedIn()){
-      this.setState({login:' logout'})
+      this.setState({login:true})
     }
   }
   componentWillUnmount() {
@@ -41,9 +41,9 @@ class LoginButton extends React.Component {
   }
   changeLoginStatus(){
     if(UserProfile.isLoggedIn()){
-      this.setState({login:' logout'});
+      this.setState({login:true});
     }else{
-      this.setState({login:' login'})
+      this.setState({login:false})
     }
   }
   open(){
@@ -60,9 +60,8 @@ class LoginButton extends React.Component {
 
   render() {
     return (
-      <button className='loginbutton' onClick={this.open}>
+      <button className={this.state.login ? 'logoutbutton':'loginbutton'} onClick={this.open}>
         <i className="fa fa-power-off" ></i>
-        <span> {this.state.login}</span>
         <LoginModal className="modal" show={this.state.open}/>
       </button>
     );

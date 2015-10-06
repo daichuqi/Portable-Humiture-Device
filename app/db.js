@@ -20,27 +20,11 @@ orm.sync();
 
 /** AUTH FUNCTIONS **/
 var login = function(username, password, callback) {
-  var response = {};
-  response.success = false;
-  var hashedPw;
-  var userObj;
-  User.findAll({
-    where: {
-      username: username
-    }
-  }).then(function(obj) {
-    userObj = obj;
-    hashedPw = obj[0].dataValues.password;
-  }).then(function(obj) {
-    return compare(password, hashedPw)
-      .then(function(data) { //data = bool from compare
-        if (data) {
-          response.user = userObj;
-          response.success = data;
-          callback(response);
-        }
-      })
-  })
+  var response = {success:false};
+  if(username==='hello' && password==='123'){
+    response.success = true;
+  }
+  callback(response);
 };
 exports.orm = orm; //so testing suite can sync/drop test.sqlite
 exports.login = login;

@@ -57,15 +57,12 @@ var UserProfile = assign({}, EventEmitter.prototype, {
 });
 
 
-var setCookie = function (id, username, img) {
+var setCookie = function (id, username) {
   if (id !== null) {
     document.cookie = "id" + "=" + id;
   }
   if (username !== null) {
     document.cookie = "username" + "=" + username;
-  }
-  if (img !== null) {
-    document.cookie = "img" + "=" + img;
   }
 };
 
@@ -79,10 +76,9 @@ UserProfile.dispatchToken = Dispatcher.register(function(payload) {
   switch (payload.type) {
     case ActionType.LOGIN:
       if (payload.response.success) {
-        let id = payload.response.user[0].id;
-        let username = payload.response.user[0].username;
-        let img = payload.response.user[0].profilePic;
-        setCookie(id,username,img);
+        let id = 1
+        let username = 'admin'
+        setCookie(id,username);
         UserProfile.emitChange();
       } else {
         console.log("login failed, user does not exist");

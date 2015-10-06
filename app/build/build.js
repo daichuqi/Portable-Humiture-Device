@@ -19,7 +19,7 @@ _reactRouter2['default'].run(_jsComponentsRoutes2['default'], _reactRouter2['def
   _react2['default'].render(_react2['default'].createElement(Root, null), document.body);
 });
 
-},{"./js/components/routes":11,"react":364,"react-router":195}],2:[function(require,module,exports){
+},{"./js/components/routes":12,"react":364,"react-router":195}],2:[function(require,module,exports){
 // handles user/profile info
 'use strict';
 Object.defineProperty(exports, '__esModule', {
@@ -151,6 +151,73 @@ var _actionsHomeActionCreators = require('../actions/homeActionCreators');
 
 var _actionsHomeActionCreators2 = _interopRequireDefault(_actionsHomeActionCreators);
 
+var Control = (function (_React$Component) {
+  _inherits(Control, _React$Component);
+
+  function Control() {
+    _classCallCheck(this, Control);
+
+    _get(Object.getPrototypeOf(Control.prototype), 'constructor', this).call(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
+  }
+
+  _createClass(Control, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _actionsHomeActionCreators2['default'].SetNavActive('who');
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2['default'].createElement(
+        'div',
+        { className: 'page section' },
+        _react2['default'].createElement(
+          'div',
+          { className: 'buttonFirstRow' },
+          _react2['default'].createElement('div', { className: 'controlButton upButton fa fa-arrow-circle-up' })
+        ),
+        _react2['default'].createElement(
+          'div',
+          { className: 'buttonSecondRow' },
+          _react2['default'].createElement('div', { className: 'controlButton leftButton fa fa-arrow-circle-left' }),
+          _react2['default'].createElement('div', { className: 'controlButton downButton fa fa-arrow-circle-down' }),
+          _react2['default'].createElement('div', { className: 'controlButton rightButton fa fa-arrow-circle-right' })
+        )
+      );
+    }
+  }]);
+
+  return Control;
+})(_react2['default'].Component);
+
+exports['default'] = Control;
+module.exports = exports['default'];
+
+},{"../actions/homeActionCreators":3,"react":364}],6:[function(require,module,exports){
+'use strict';
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _actionsHomeActionCreators = require('../actions/homeActionCreators');
+
+var _actionsHomeActionCreators2 = _interopRequireDefault(_actionsHomeActionCreators);
+
 var _storesHomeStore = require('../stores/homeStore');
 
 var _storesHomeStore2 = _interopRequireDefault(_storesHomeStore);
@@ -195,7 +262,7 @@ var Home = (function (_React$Component) {
 exports['default'] = Home;
 module.exports = exports['default'];
 
-},{"../actions/homeActionCreators":3,"../stores/homeStore":15,"../stores/userProfileStore":17,"react":364}],6:[function(require,module,exports){
+},{"../actions/homeActionCreators":3,"../stores/homeStore":15,"../stores/userProfileStore":17,"react":364}],7:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
   value: true
@@ -250,7 +317,7 @@ var Layout = (function (_React$Component) {
 exports['default'] = Layout;
 module.exports = exports['default'];
 
-},{"./nav":9,"react":364,"react-router":195}],7:[function(require,module,exports){
+},{"./nav":10,"react":364,"react-router":195}],8:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
   value: true
@@ -310,7 +377,7 @@ var LoginButton = (function (_React$Component) {
     this.state = {
       open: false,
       header: false,
-      login: 'login'
+      login: false
     };
   }
 
@@ -321,7 +388,7 @@ var LoginButton = (function (_React$Component) {
       _storesModalStore2['default'].addChangeListener(this.close);
       _storesHomeStore2['default'].addChangeListener(this.changeHeaderState);
       if (_storesUserProfileStore2['default'].isLoggedIn()) {
-        this.setState({ login: ' logout' });
+        this.setState({ login: true });
       }
     }
   }, {
@@ -340,9 +407,9 @@ var LoginButton = (function (_React$Component) {
     key: 'changeLoginStatus',
     value: function changeLoginStatus() {
       if (_storesUserProfileStore2['default'].isLoggedIn()) {
-        this.setState({ login: ' logout' });
+        this.setState({ login: true });
       } else {
-        this.setState({ login: ' login' });
+        this.setState({ login: false });
       }
     }
   }, {
@@ -365,14 +432,8 @@ var LoginButton = (function (_React$Component) {
     value: function render() {
       return _react2['default'].createElement(
         'button',
-        { className: 'loginbutton', onClick: this.open },
+        { className: this.state.login ? 'logoutbutton' : 'loginbutton', onClick: this.open },
         _react2['default'].createElement('i', { className: 'fa fa-power-off' }),
-        _react2['default'].createElement(
-          'span',
-          null,
-          ' ',
-          this.state.login
-        ),
         _react2['default'].createElement(_loginmodal2['default'], { className: 'modal', show: this.state.open })
       );
     }
@@ -390,7 +451,7 @@ LoginButton.contextTypes = {
 exports['default'] = LoginButton;
 module.exports = exports['default'];
 
-},{"../actions/UserActionCreators":2,"../stores/homeStore":15,"../stores/modalStore":16,"../stores/userProfileStore":17,"./loginmodal":8,"react":364,"react-router":195}],8:[function(require,module,exports){
+},{"../actions/UserActionCreators":2,"../stores/homeStore":15,"../stores/modalStore":16,"../stores/userProfileStore":17,"./loginmodal":9,"react":364,"react-router":195}],9:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
   value: true
@@ -450,7 +511,7 @@ var Login = (function (_React$Component) {
       if (userData.username && userData.password) {
         _actionsUserActionCreators2['default'].loginUser(userData, function () {
           _actionsModalActionCreators2['default'].closeLoginModal();
-          _this.context.router.transitionTo('news');
+          _this.context.router.transitionTo('control');
         });
       }
     }
@@ -552,7 +613,7 @@ var LoginModal = (function (_React$Component2) {
 exports['default'] = LoginModal;
 module.exports = exports['default'];
 
-},{"../actions/UserActionCreators":2,"../actions/modalActionCreators":4,"react":364,"react-bootstrap":119}],9:[function(require,module,exports){
+},{"../actions/UserActionCreators":2,"../actions/modalActionCreators":4,"react":364,"react-bootstrap":119}],10:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
   value: true
@@ -667,7 +728,7 @@ var Nav = (function (_React$Component) {
               ),
               _react2['default'].createElement(
                 _reactRouter2['default'].Link,
-                { to: 'who' },
+                { to: 'control' },
                 _react2['default'].createElement(
                   'button',
                   { className: 'navButton2 fa fa-arrows' },
@@ -689,7 +750,7 @@ var Nav = (function (_React$Component) {
 exports['default'] = Nav;
 module.exports = exports['default'];
 
-},{"../actions/UserActionCreators":2,"../stores/homeStore":15,"../stores/modalStore":16,"../stores/userProfileStore":17,"./loginbutton":7,"./loginmodal":8,"react":364,"react-router":195}],10:[function(require,module,exports){
+},{"../actions/UserActionCreators":2,"../stores/homeStore":15,"../stores/modalStore":16,"../stores/userProfileStore":17,"./loginbutton":8,"./loginmodal":9,"react":364,"react-router":195}],11:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
   value: true
@@ -735,7 +796,7 @@ var NotFound = (function (_React$Component) {
 exports['default'] = NotFound;
 module.exports = exports['default'];
 
-},{"react":364}],11:[function(require,module,exports){
+},{"react":364}],12:[function(require,module,exports){
 'use strict';
 Object.defineProperty(exports, '__esModule', {
   value: true
@@ -761,82 +822,22 @@ var _notfound = require('./notfound');
 
 var _notfound2 = _interopRequireDefault(_notfound);
 
-var _whoweare = require('./whoweare');
+var _control = require('./control');
 
-var _whoweare2 = _interopRequireDefault(_whoweare);
+var _control2 = _interopRequireDefault(_control);
 
 var routes = _react2['default'].createElement(
   _reactRouter.Route,
   { handler: _layout2['default'] },
   _react2['default'].createElement(_reactRouter.DefaultRoute, { name: 'home', handler: _home2['default'] }),
-  _react2['default'].createElement(_reactRouter.Route, { name: 'who', path: '/who', handler: _whoweare2['default'] }),
+  _react2['default'].createElement(_reactRouter.Route, { name: 'control', path: '/control', handler: _control2['default'] }),
   _react2['default'].createElement(_reactRouter.NotFoundRoute, { name: 'not-found', handler: _notfound2['default'] })
 );
 
 exports['default'] = routes;
 module.exports = exports['default'];
 
-},{"./home":5,"./layout":6,"./notfound":10,"./whoweare":12,"react":364,"react-router":195}],12:[function(require,module,exports){
-'use strict';
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _actionsHomeActionCreators = require('../actions/homeActionCreators');
-
-var _actionsHomeActionCreators2 = _interopRequireDefault(_actionsHomeActionCreators);
-
-var Whoweare = (function (_React$Component) {
-  _inherits(Whoweare, _React$Component);
-
-  function Whoweare() {
-    _classCallCheck(this, Whoweare);
-
-    _get(Object.getPrototypeOf(Whoweare.prototype), 'constructor', this).call(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
-  }
-
-  _createClass(Whoweare, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      _actionsHomeActionCreators2['default'].SetNavActive('who');
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2['default'].createElement(
-        'div',
-        { className: 'page section' },
-        _react2['default'].createElement(
-          'h1',
-          null,
-          'control Panel'
-        )
-      );
-    }
-  }]);
-
-  return Whoweare;
-})(_react2['default'].Component);
-
-exports['default'] = Whoweare;
-module.exports = exports['default'];
-
-},{"../actions/homeActionCreators":3,"react":364}],13:[function(require,module,exports){
+},{"./control":5,"./home":6,"./layout":7,"./notfound":11,"react":364,"react-router":195}],13:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -1093,15 +1094,12 @@ var UserProfile = (0, _objectAssign2['default'])({}, _events2['default'].prototy
   }
 });
 
-var setCookie = function setCookie(id, username, img) {
+var setCookie = function setCookie(id, username) {
   if (id !== null) {
     document.cookie = "id" + "=" + id;
   }
   if (username !== null) {
     document.cookie = "username" + "=" + username;
-  }
-  if (img !== null) {
-    document.cookie = "img" + "=" + img;
   }
 };
 
@@ -1115,10 +1113,9 @@ UserProfile.dispatchToken = _dispatcherDispatcherJs2['default'].register(functio
   switch (payload.type) {
     case ActionType.LOGIN:
       if (payload.response.success) {
-        var id = payload.response.user[0].id;
-        var _username = payload.response.user[0].username;
-        var img = payload.response.user[0].profilePic;
-        setCookie(id, _username, img);
+        var id = 1;
+        var _username = 'admin';
+        setCookie(id, _username);
         UserProfile.emitChange();
       } else {
         console.log("login failed, user does not exist");

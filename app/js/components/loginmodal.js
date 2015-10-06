@@ -20,7 +20,7 @@ class Login extends React.Component {
     if(userData.username && userData.password){
       UserActions.loginUser(userData, () => {
         ModalActions.closeLoginModal();
-        this.context.router.transitionTo('news');
+        this.context.router.transitionTo('control');
       });
     }
   }
