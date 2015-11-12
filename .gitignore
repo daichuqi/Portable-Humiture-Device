@@ -1,6 +1,5 @@
 #this is .gitignore for web branch
 #for branching management purposes
-rpi/*
 
 #normal .gitignore stuff
 node_modules
