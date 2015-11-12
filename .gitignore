@@ -1,3 +1,7 @@
+#git branch managing purposes
+
+.gitignore
+
 node_modules
 dist
 .DS_Store
