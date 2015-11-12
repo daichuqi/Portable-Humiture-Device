@@ -1,3 +1,8 @@
+#this is .gitignore for rpi branch
+#for branching management purposes
+web/*
+
+#normal .gitignore stuff
 node_modules
 dist
 .DS_Store
