@@ -4,10 +4,10 @@
 #include <pthread.h>
 
 #define NUM_PWM_PINS 4
-#define FRONT_LEFT_MOTOR 1
-#define FRONT_RIGHT_MOTOR 2
-#define BACK_LEFT_MOTOR 3
-#define BACK_RIGHT_MOTOR 4
+#define FRONT_LEFT_MOTOR 0
+#define FRONT_RIGHT_MOTOR 1
+#define BACK_LEFT_MOTOR 2
+#define BACK_RIGHT_MOTOR 3
 
 #define REVERSE 5
 
@@ -30,33 +30,45 @@ read Cubesensor data
 read distance
 
 */
-
+//func declaration
+int temporaryProtocol();
+void moveLeft();
+void moveRight();
+void moveForward();
+void moveBackward();
+void dontMove(); 
 int main(void)
 {
 	//initialization
 	if(wiringPiSetup()==-1)//initiailizes wiringPi library
 		return 1;//if it fails, abort ASAP!
-	for(int i = 1; i < NUM_PINS; i++)
+	for(int i = 0; i < NUM_PWM_PINS; i++)
 		softPwmCreate(i, 0, 255);
+	printf("before while\n");
 	while(temporaryProtocol());
 }
 
 int temporaryProtocol()
 {
 	//assuming commands are forward, backward, left, right with F, B, L, and R
-	char* command;
-	scanf("%s", &command);
-	switch(*command)
+	char command;
+	scanf("\n%c", &command);
+	printf("got %c\n", command);
+	switch(command)
 	{
-		case: 'F'
+		case 'F':
 			moveForward();
-		case: 'B'
+			break;
+		case 'B':
 			moveBackward();
-		case: 'L'
+			break;
+		case 'L':
 			moveLeft();
-		case: 'R'
+			break;
+		case 'R':
 			moveRight();
-		case: 'E'
+			break;
+		case 'E':
 			return 0;
 		default:
 			dontMove();
@@ -85,7 +97,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 0, 255, 0);
+	updateMotors(0, 255, 0, 255);
 	//reads data from sensors
 	//sends data to server
 }
