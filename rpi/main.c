@@ -4,12 +4,12 @@
 #include <pthread.h>
 
 #define NUM_PWM_PINS 4
-#define FRONT_LEFT_MOTOR 0
-#define FRONT_RIGHT_MOTOR 1
-#define BACK_LEFT_MOTOR 2
-#define BACK_RIGHT_MOTOR 3
+#define FRONT_LEFT_MOTOR_A 0
+#define FRONT_LEFT_MOTOR_B 1
 
-#define REVERSE 5
+/*#define FRONT_RIGHT_MOTOR 1
+#define BACK_LEFT_MOTOR 2
+#define BACK_RIGHT_MOTOR 3*/
 
 /*
 1. Reading distance
@@ -78,18 +78,19 @@ int temporaryProtocol()
 /*
 Updates motors. Input is in order of FL, FR, BL, BR
 */
-void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
+void updateMotors(int frontLeftA, int frontLeftB)
 {
-	softPwmWrite(FRONT_LEFT_MOTOR, frontLeft);
-	softPwmWrite(FRONT_RIGHT_MOTOR, frontRight);
-	softPwmWrite(BACK_LEFT_MOTOR, backLeft);
-	softPwmWrite(BACK_RIGHT_MOTOR, backRight);	
+	softPwmWrite(FRONT_LEFT_MOTOR_A, frontLeftA);
+	softPwmWrite(FRONT_LEFT_MOTOR_B, frontLeftB);
+	//softPwmWrite(FRONT_RIGHT_MOTOR, frontRight);
+	//softPwmWrite(BACK_LEFT_MOTOR, backLeft);
+	//softPwmWrite(BACK_RIGHT_MOTOR, backRight);	
 }
 
 void moveLeft()
 {
 	//moves some distance
-	updateMotors(255, 0, 255, 0);
+	updateMotors(0,0);
 	//reads data from sensors
 	//sends data to server
 }
@@ -97,7 +98,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 255, 0, 255);
+	updateMotors(0, 0);
 	//reads data from sensors
 	//sends data to server
 }
@@ -105,7 +106,7 @@ void moveRight()
 void moveForward()
 {
 	//moves some distance
-	updateMotors(255, 255, 255, 255);
+	updateMotors(255, 0);
 	//reads data from sensors
 	//sends data to server
 }
@@ -113,7 +114,7 @@ void moveForward()
 void moveBackward()
 {
 	//moves some distance
-	updateMotors(0, 0, 0, 0);
+	updateMotors(0, 255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -122,5 +123,5 @@ void dontMove()
 {
 	//this method is called after reading input returns nothing.
 	//sets all pins to 0
-	updateMotors(0,0,0,0);
+	updateMotors(0,0);
 }
