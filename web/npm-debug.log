@@ -1,0 +1,24 @@
+info it worked if it ends with ok
+verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'i' ]
+info using npm@1.1.4
+info using node@v0.6.19
+verbose config file /home/pi/.npmrc
+verbose config file /usr/etc/npmrc
+verbose config file /usr/share/npm/npmrc
+ERR! Couldn't read dependencies.
+ERR! Error: ENOENT, open '/home/pi/Desktop/CS490ES0/Portable-Humiture-Device/web/package.json'
+ERR! You may report this log at:
+ERR!     <http://bugs.debian.org/npm>
+ERR! or use
+ERR!     reportbug --attach /home/pi/Desktop/CS490ES0/Portable-Humiture-Device/web/npm-debug.log npm
+ERR! 
+ERR! System Linux 4.1.7-v7+
+ERR! command "/usr/bin/nodejs" "/usr/bin/npm" "i"
+ERR! cwd /home/pi/Desktop/CS490ES0/Portable-Humiture-Device/web
+ERR! node -v v0.6.19
+ERR! npm -v 1.1.4
+ERR! path /home/pi/Desktop/CS490ES0/Portable-Humiture-Device/web/package.json
+ERR! code ENOENT
+ERR! message ENOENT, open '/home/pi/Desktop/CS490ES0/Portable-Humiture-Device/web/package.json'
+ERR! errno {}
+verbose exit [ 1, true ]

@@ -4,8 +4,9 @@
 #include <pthread.h>
 
 #define NUM_PWM_PINS 4
-#define FRONT_LEFT_MOTOR_A 0
-#define FRONT_LEFT_MOTOR_B 1
+#define FRONT_LEFT_MOTOR_ENABLE 1
+#define FRONT_LEFT_MOTOR_A 4
+#define FRONT_LEFT_MOTOR_B 5
 
 #define FRONT_RIGHT_MOTOR_A 2
 #define FRONT_RIGHT_MOTOR_B 3
@@ -40,13 +41,20 @@ void moveRight();
 void moveForward();
 void moveBackward();
 void dontMove(); 
+
 int main(void)
 {
 	//initialization
 	if(wiringPiSetup()==-1)//initiailizes wiringPi library
 		return 1;//if it fails, abort ASAP!
-	for(int i = 0; i < NUM_PWM_PINS; i++)
+	pinMode(0, OUTPUT);
+	digitalWrite(0, HIGH);
+	for(int i = 4; i <= 5; i++)
+	{
+		printf("initializing pwm pin %d\n", i);
+		//pinMode(i, OUTPUT);
 		softPwmCreate(i, 0, 255);
+	}
 	printf("before while\n");
 	while(temporaryProtocol());
 }
@@ -124,7 +132,6 @@ void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 		softPwmWrite(BACK_RIGHT_MOTOR_A, backRight);
 		softPwmWrite(BACK_RIGHT_MOTOR_B, 0);				
 	}
-	
 }
 
 void moveLeft()

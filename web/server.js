@@ -3,7 +3,6 @@ var server = express();
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
-var db = require('./db.js');
 server.use(bodyParser.json());
 
 server.use(favicon(path.join(__dirname, '/assets', 'favicon.ico')));
@@ -14,9 +13,7 @@ server.get('*', function(req, res) {
 });
 
 server.post('/login', function(req, res) {
-  db.login(req.body.username, req.body.password, function(response) {
-    res.send(response);
-  })
+ console.log('login')
 })
 
 
