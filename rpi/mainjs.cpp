@@ -2,6 +2,8 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 #include <pthread.h>
+#include <v8.h>
+#include <node.h>
 
 #define NUM_PWM_PINS 4
 #define ENABLE 0
@@ -35,13 +37,14 @@ read distance
 */
 //func declaration
 void initialization();
-int nodejsProtocol();
 int temporaryProtocol();
 void moveLeft();
 void moveRight();
 void moveForward();
 void moveBackward();
 void dontMove(); 
+
+using namespace v8;
 
 int main(void)
 {
@@ -53,8 +56,7 @@ int main(void)
 	digitalWrite(ENABLE, HIGH);//set it to high
 	initialization();
 	printf("before while\n");
-	while(nodejsProtocol());
-	//while(temporaryProtocol());
+	while(temporaryProtocol());
 }
 
 void initialization()
@@ -69,37 +71,6 @@ void initialization()
 	softPwmCreate(BACK_RIGHT_MOTOR_B, 0, 255);
 	printf("Initialized pins: %d, %d, %d, %d, %d, %d, %d, %d\n", FRONT_LEFT_MOTOR_A, FRONT_LEFT_MOTOR_B, BACK_LEFT_MOTOR_A, BACK_LEFT_MOTOR_B, FRONT_RIGHT_MOTOR_A, FRONT_RIGHT_MOTOR_B, BACK_RIGHT_MOTOR_A, BACK_RIGHT_MOTOR_B);
 }
-
-int nodejsProtocol()
-{
-	FILE* fd;
-	char* myFIFO = "myFIFO";
-	char command;
-	fd = fopen(myFIFO, "r");
-	fscanf(fd, "%c", &command);
-	printf("Read %c\n", command);
-	switch(command)
-	{
-		case 'F':
-			moveForward();
-			break;
-		case 'B':
-			moveBackward();
-			break;
-		case 'L':
-			moveLeft();
-			break;
-		case 'R':
-			moveRight();
-			break;
-		case 'E':
-			return 0;
-		default:
-			dontMove();
-	}
-	return 1;
-}
-
 int temporaryProtocol()
 {
 	//assuming commands are forward, backward, left, right with F, B, L, and R
