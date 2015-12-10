@@ -2,8 +2,10 @@ var express = require('express');
 var server = express();
 var path = require('path');
 var bodyParser = require('body-parser');
-var gpio = require('pi-gpio');
+//var gpio = require('pi-gpio');
 var value = 1;
+const fs = require("fs");
+const childProcess = require("child_process");
 
 server.use(bodyParser.json());
 
@@ -12,7 +14,8 @@ server.use('/assets', express.static(path.join(__dirname, '/assets')));
 server.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
-    
+
+/* 
 setInterval(function() {
     gpio.write(15, value, function() {
         value = (value === 1 ? 0 : 1);
@@ -26,15 +29,54 @@ var gpioFunc = function(pin,set){
     });
   });
 }
+*/
+
+//creating a named pipe
 
 
+/*childProcess.exec("rm myFIFO", function(code){
+	if(code==null)
+		console.log("removed myFIFO");
+	else
+		console.log("error removing myFIFO:" + code);
+	});
+*/
+var mkFifo = childProcess.exec("mkfifo myFIFO", function(code){
+	if(code!=null)
+		console.log("Failed to create FIFO: " + code);
+	else
+		console.log("Made FIFO");
+});
 
+var options = {
+	encoding: "ascii",
+};
+
+function writeToFIFO(str){
+	fs.open("myFIFO", "w+", function(err,fd){
+	if(err)
+		console.log("Can't open FIFO:" + err);
+	else
+		fs.writeSync(fd, str);
+	});
+
+}
 
 server.post('/move', function(req, res) {
   if(req.body.direction === 'up'){
-    console.log(req.body.direction)
+	  writeToFIFO("F");
+//	fs.open("myFIFO", "w+", function(err,fd){
+//	if(err)
+//		console.log("Can't open FIFO:" + err);
+//	else
+//		fs.writeSync(fd, "F");
+//	});
 
-    gpioFunc(13, 1);
+//    fs.writeSync(pipe, "F");
+    //childProcess.exec('"F">myFIFO', options);
+    //console.log(req.body.direction)
+
+   /* gpioFunc(13, 1);
     gpioFunc(15, 0);
     gpioFunc(19, 1);
     gpioFunc(21, 0);
@@ -42,13 +84,13 @@ server.post('/move', function(req, res) {
     gpioFunc(16, 1);
     gpioFunc(18, 0);
     gpioFunc(36, 1);
-    gpioFunc(38, 0);
+    gpioFunc(38, 0);*/
 
 
   }else if(req.body.direction === 'down'){
     console.log(req.body.direction)
 
-    gpioFunc(13, 0);
+   /* gpioFunc(13, 0);
     gpioFunc(15, 1);
     gpioFunc(19, 0);
     gpioFunc(21, 1);
@@ -56,13 +98,13 @@ server.post('/move', function(req, res) {
     gpioFunc(16, 0);
     gpioFunc(18, 1);
     gpioFunc(36, 0);
-    gpioFunc(38, 1);
+    gpioFunc(38, 1);*/
 
 
   }else if(req.body.direction === 'left'){
     console.log(req.body.direction)
 
-    gpioFunc(13, 0);
+   /* gpioFunc(13, 0);
     gpioFunc(15, 1);
     gpioFunc(19, 0);
     gpioFunc(21, 1);
@@ -70,13 +112,13 @@ server.post('/move', function(req, res) {
     gpioFunc(16, 1);
     gpioFunc(18, 0);
     gpioFunc(36, 1);
-    gpioFunc(38, 0);
+    gpioFunc(38, 0);*/
 
 
   }else if(req.body.direction === 'right'){
     console.log(req.body.direction)
 
-    gpioFunc(13, 1);
+    /*gpioFunc(13, 1);
     gpioFunc(15, 0);
     gpioFunc(19, 1);
     gpioFunc(21, 0);
@@ -84,14 +126,14 @@ server.post('/move', function(req, res) {
     gpioFunc(16, 0);
     gpioFunc(18, 1);
     gpioFunc(36, 0);
-    gpioFunc(38, 1);
+    gpioFunc(38, 1);*/
 
   }else if(req.body.direction === 'enable'){
     console.log(req.body.direction)
-    gpioFunc(23, 1);
+    //gpioFunc(23, 1);
   }else if(req.body.direction === 'disable'){
     console.log(req.body.direction)
-    gpioFunc(23, 0);
+    //gpioFunc(23, 0);
   }
 
   res.send('200');
