@@ -8,6 +8,15 @@
 
 #define SOUND_OVER_2_IN_CM 17000
 #define MICRO 1000000
+/*HC-SR04 Ultrasonic Sensor Specs
+Cycle: 50 us
+(8 cycles for sonic burst, AKA minimum reading time is 400us, so 1ms is good enough)
+Input VCC: 5V
+Output (echo): 5V
+Range: 2cm - 500cm
+Resolution: 0.3cm
+Frequency: 40kHz
+*/
 /*#define HIGH 1
 #define LOW 0
 
