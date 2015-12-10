@@ -4,8 +4,9 @@
 #include <pthread.h>
 
 #define NUM_PWM_PINS 4
-#define FRONT_LEFT_MOTOR_A 0
-#define FRONT_LEFT_MOTOR_B 1
+#define FRONT_LEFT_MOTOR_ENABLE 1
+#define FRONT_LEFT_MOTOR_A 4
+#define FRONT_LEFT_MOTOR_B 5
 
 /*#define FRONT_RIGHT_MOTOR 1
 #define BACK_LEFT_MOTOR 2
@@ -42,8 +43,14 @@ int main(void)
 	//initialization
 	if(wiringPiSetup()==-1)//initiailizes wiringPi library
 		return 1;//if it fails, abort ASAP!
-	for(int i = 0; i < NUM_PWM_PINS; i++)
+	pinMode(0, OUTPUT);
+	digitalWrite(0, HIGH);
+	for(int i = 4; i <= 5; i++)
+	{
+		printf("initializing pwm pin %d\n", i);
+		//pinMode(i, OUTPUT);
 		softPwmCreate(i, 0, 255);
+	}
 	printf("before while\n");
 	while(temporaryProtocol());
 }
@@ -80,6 +87,8 @@ Updates motors. Input is in order of FL, FR, BL, BR
 */
 void updateMotors(int frontLeftA, int frontLeftB)
 {
+	//digitalWrite(FRONT_LEFT_MOTOR_A, HIGH);
+	//digitalWrite(FRONT_LEFT_MOTOR_B, LOW);
 	softPwmWrite(FRONT_LEFT_MOTOR_A, frontLeftA);
 	softPwmWrite(FRONT_LEFT_MOTOR_B, frontLeftB);
 	//softPwmWrite(FRONT_RIGHT_MOTOR, frontRight);
@@ -98,7 +107,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 0);
+	updateMotors(255, 255);
 	//reads data from sensors
 	//sends data to server
 }
