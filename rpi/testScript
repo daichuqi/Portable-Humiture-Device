@@ -5,6 +5,6 @@
 
 echo "Starting main: Enter 'E' to terminate program and log on"
 echo "========================================="
-cd ~/Desktop/CS490E/Portable-Humiture-Device/rpi
-sudo ./main
+cd ~Desktop/CS490E/Portable-Humiture-Device
+sudo node server_test.js
 echo "ending script, have a nice day"

@@ -31,26 +31,16 @@ var gpioFunc = function(pin,set){
 }
 */
 
-//creating a named pipe
-
-
-/*childProcess.exec("rm myFIFO", function(code){
-	if(code==null)
-		console.log("removed myFIFO");
-	else
-		console.log("error removing myFIFO:" + code);
-	});
-*/
-var mkFifo = childProcess.exec("mkfifo myFIFO", function(code){
+var runMain = childProcess.exec("sudo ./main", function(code){
 	if(code!=null)
 		console.log("Failed to create FIFO: " + code);
 	else
 		console.log("Made FIFO");
 });
-
+/*
 var options = {
 	encoding: "ascii",
-};
+};*/
 
 function writeToFIFO(str){
 	fs.open("myFIFO", "w+", function(err,fd){
@@ -65,17 +55,7 @@ function writeToFIFO(str){
 server.post('/move', function(req, res) {
   if(req.body.direction === 'up'){
 	  writeToFIFO("F");
-//	fs.open("myFIFO", "w+", function(err,fd){
-//	if(err)
-//		console.log("Can't open FIFO:" + err);
-//	else
-//		fs.writeSync(fd, "F");
-//	});
-
-//    fs.writeSync(pipe, "F");
-    //childProcess.exec('"F">myFIFO', options);
-    //console.log(req.body.direction)
-
+	  console.log(req.body.direction)
    /* gpioFunc(13, 1);
     gpioFunc(15, 0);
     gpioFunc(19, 1);
@@ -88,9 +68,9 @@ server.post('/move', function(req, res) {
 
 
   }else if(req.body.direction === 'down'){
-    console.log(req.body.direction)
-
-   /* gpioFunc(13, 0);
+	writeToFIFO("B");
+ 	console.log(req.body.direction);
+  /* gpioFunc(13, 0);
     gpioFunc(15, 1);
     gpioFunc(19, 0);
     gpioFunc(21, 1);
@@ -102,6 +82,7 @@ server.post('/move', function(req, res) {
 
 
   }else if(req.body.direction === 'left'){
+	  writeToFIFO("L");
     console.log(req.body.direction)
 
    /* gpioFunc(13, 0);
@@ -116,6 +97,7 @@ server.post('/move', function(req, res) {
 
 
   }else if(req.body.direction === 'right'){
+	  writeToFIFO("R");
     console.log(req.body.direction)
 
     /*gpioFunc(13, 1);
@@ -129,6 +111,7 @@ server.post('/move', function(req, res) {
     gpioFunc(38, 1);*/
 
   }else if(req.body.direction === 'enable'){
+	  writeToFIFO("A");
     console.log(req.body.direction)
     //gpioFunc(23, 1);
   }else if(req.body.direction === 'disable'){
