@@ -50,12 +50,7 @@ int main(void)
 	//enable pin has to be on to activate H bridge
 	pinMode(ENABLE, OUTPUT);//set pinmode of Enable to output
 	digitalWrite(ENABLE, HIGH);//set it to high
-	for(int i = 4; i <= 5; i++)
-	{
-		printf("initializing pwm pin %d\n", i);
-		//pinMode(i, OUTPUT);
-		softPwmCreate(i, 0, 255);
-	}
+	initialization();
 	printf("before while\n");
 	while(temporaryProtocol());
 }
@@ -68,8 +63,9 @@ void initialization()
 	softPwmCreate(BACK_LEFT_MOTOR_B, 0, 255);
 	softPwmCreate(FRONT_RIGHT_MOTOR_A, 0, 255);
 	softPwmCreate(FRONT_RIGHT_MOTOR_B, 0, 255);
-	softPwmCreate(BACK_LEFT_MOTOR_A, 0, 255);
-	softPwmCreate(BACK_LEFT_MOTOR_B, 0, 255);
+	softPwmCreate(BACK_RIGHT_MOTOR_A, 0, 255);
+	softPwmCreate(BACK_RIGHT_MOTOR_B, 0, 255);
+	printf("Initialized pins: %d, %d, %d, %d, %d, %d, %d, %d\n", FRONT_LEFT_MOTOR_A, FRONT_LEFT_MOTOR_B, BACK_LEFT_MOTOR_A, BACK_LEFT_MOTOR_B, FRONT_RIGHT_MOTOR_A, FRONT_RIGHT_MOTOR_B, BACK_RIGHT_MOTOR_A, BACK_RIGHT_MOTOR_B);
 }
 int temporaryProtocol()
 {
@@ -107,49 +103,58 @@ void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 	if(frontLeft<0)//checks if it's negative
 	{//if so
 		softPwmWrite(FRONT_LEFT_MOTOR_A, 0);//set A to 0
-		softPwmWrite(FRONT_LEFT_MOTOR_B, -frontLeft);//set B to frontLeft (positive), which is -frontLeft	
+		softPwmWrite(FRONT_LEFT_MOTOR_B, -frontLeft);//set B to frontLeft (positive), which is -frontLeft
+		printf("FRONT_LEFT_MOTOR: A = %d\tB = %d\n", 0, -frontLeft);	
 	}
 	else
 	{//otherwise it's positive
 		softPwmWrite(FRONT_LEFT_MOTOR_A, frontLeft);//set A to frontLeft
 		softPwmWrite(FRONT_LEFT_MOTOR_B, 0);//set B to 0
+		printf("FRONT_LEFT_MOTOR: A = %d\tB = %d\n", frontLeft, 0);
 	}//same with every other motor
 	if(frontRight<0)
 	{
 		softPwmWrite(FRONT_RIGHT_MOTOR_A, 0);
 		softPwmWrite(FRONT_LEFT_MOTOR_B, -frontRight);
+		printf("FRONT_RIGHT_MOTOR: A = %d\tB = %d\n", 0, -frontRight);
 	}
 	else
 	{
 		softPwmWrite(FRONT_RIGHT_MOTOR_A, frontRight);
 		softPwmWrite(FRONT_LEFT_MOTOR_B, 0);		
+		printf("FRONT_RIGHT_MOTOR: A = %d\tB = %d\n", frontRight, 0);
 	}
 	if(backLeft<0)
 	{
 		softPwmWrite(BACK_LEFT_MOTOR_A, 0);
 		softPwmWrite(BACK_LEFT_MOTOR_B, -backLeft);
+		printf("BACK_LEFT_MOTOR: A = %d\tB = %d\n", 0, -backLeft);
 	}
 	else
 	{
 		softPwmWrite(BACK_LEFT_MOTOR_A, backLeft);
 		softPwmWrite(BACK_LEFT_MOTOR_B, 0);		
+		printf("BACK_LEFT_MOTOR: A = %d\tB = %d\n", backLeft, 0);
 	}
 	if(backRight<0)
 	{
 		softPwmWrite(BACK_RIGHT_MOTOR_A, 0);
 		softPwmWrite(BACK_RIGHT_MOTOR_B, -backRight);
+		printf("BACK_RIGHT_MOTOR: A = %d\tB = %d\n", 0, -backRight);
 	}
 	else
 	{
 		softPwmWrite(BACK_RIGHT_MOTOR_A, backRight);
 		softPwmWrite(BACK_RIGHT_MOTOR_B, 0);				
+		printf("BACK_RIGHT_MOTOR: A = %d\tB = %d\n", backRight, 0);
 	}
 }
 
 void moveLeft()
 {
 	//moves some distance
-	updateMotors(255, -255, 255, -255);
+	updateMotors(255, 0, 0, 0);
+	//updateMotors(255, -255, 255, -255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -157,7 +162,8 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(-255, 255, -255, 255);
+	updateMotors(0, 255, 0, 0);
+	//updateMotors(-255, 255, -255, 255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -166,6 +172,7 @@ void moveForward()
 {
 	//moves some distance
 	updateMotors(255, 255, 255, 255);
+	//updateMotors(255, 255, 255, 255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -173,7 +180,8 @@ void moveForward()
 void moveBackward()
 {
 	//moves some distance
-	updateMotors(-255,-255,-255,-255);
+	updateMotors(0, 0, 0, 255);
+	//updateMotors(-255,-255,-255,-255);
 	//reads data from sensors
 	//sends data to server
 }
