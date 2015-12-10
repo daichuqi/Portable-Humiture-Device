@@ -1,6 +1,6 @@
 #! /bin/sh
 #Testing bash scripts
-#NOTE:  the script is /etc/init.d//cs490e
+#NOTE:  the script is /from home: etc/init.d//cs490e
 #More info at www.stuffaboutcode.com/2012/06/raspberry-pi-run-program-at-start-u[.html
 
 echo "Starting main: Enter 'E' to terminate program and log on"
