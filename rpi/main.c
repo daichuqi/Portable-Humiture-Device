@@ -4,16 +4,15 @@
 #include <pthread.h>
 
 #define NUM_PWM_PINS 4
-#define FRONT_LEFT_MOTOR_ENABLE 1
-#define FRONT_LEFT_MOTOR_A 4
-#define FRONT_LEFT_MOTOR_B 5
-
-#define FRONT_RIGHT_MOTOR_A 2
-#define FRONT_RIGHT_MOTOR_B 3
-#define BACK_LEFT_MOTOR_A 4
-#define BACK_LEFT_MOTOR_B 5
-#define BACK_RIGHT_MOTOR_A 6
-#define BACK_LEFT_MOTOR_B 7
+#define ENABLE 0
+#define FRONT_LEFT_MOTOR_A 2
+#define FRONT_LEFT_MOTOR_B 3
+#define FRONT_RIGHT_MOTOR_A 4
+#define FRONT_RIGHT_MOTOR_B 5
+#define BACK_LEFT_MOTOR_A 12
+#define BACK_LEFT_MOTOR_B 13
+#define BACK_RIGHT_MOTOR_A 27
+#define BACK_RIGHT_MOTOR_B 28
 
 /*
 1. Reading distance
@@ -35,6 +34,7 @@ read distance
 
 */
 //func declaration
+void initialization();
 int temporaryProtocol();
 void moveLeft();
 void moveRight();
@@ -47,8 +47,9 @@ int main(void)
 	//initialization
 	if(wiringPiSetup()==-1)//initiailizes wiringPi library
 		return 1;//if it fails, abort ASAP!
-	pinMode(0, OUTPUT);
-	digitalWrite(0, HIGH);
+	//enable pin has to be on to activate H bridge
+	pinMode(ENABLE, OUTPUT);//set pinmode of Enable to output
+	digitalWrite(ENABLE, HIGH);//set it to high
 	for(int i = 4; i <= 5; i++)
 	{
 		printf("initializing pwm pin %d\n", i);
@@ -59,6 +60,17 @@ int main(void)
 	while(temporaryProtocol());
 }
 
+void initialization()
+{//initailizes all pins for the motor
+	softPwmCreate(FRONT_LEFT_MOTOR_A, 0, 255);
+	softPwmCreate(FRONT_LEFT_MOTOR_B, 0, 255);
+	softPwmCreate(BACK_LEFT_MOTOR_A, 0, 255);
+	softPwmCreate(BACK_LEFT_MOTOR_B, 0, 255);
+	softPwmCreate(FRONT_RIGHT_MOTOR_A, 0, 255);
+	softPwmCreate(FRONT_RIGHT_MOTOR_B, 0, 255);
+	softPwmCreate(BACK_LEFT_MOTOR_A, 0, 255);
+	softPwmCreate(BACK_LEFT_MOTOR_B, 0, 255);
+}
 int temporaryProtocol()
 {
 	//assuming commands are forward, backward, left, right with F, B, L, and R
