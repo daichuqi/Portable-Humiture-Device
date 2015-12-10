@@ -9,8 +9,8 @@
 #define FRONT_LEFT_MOTOR_B 3
 #define FRONT_RIGHT_MOTOR_A 4
 #define FRONT_RIGHT_MOTOR_B 5
-#define BACK_LEFT_MOTOR_A 12
-#define BACK_LEFT_MOTOR_B 13
+#define BACK_LEFT_MOTOR_A 13
+#define BACK_LEFT_MOTOR_B 12
 #define BACK_RIGHT_MOTOR_A 27
 #define BACK_RIGHT_MOTOR_B 28
 
@@ -186,7 +186,7 @@ void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 void moveLeft()
 {
 	//moves some distance
-	updateMotors(255, 0, 0, 0);
+	updateMotors(255, -255, 255, -255);
 	//updateMotors(255, -255, 255, -255);
 	//reads data from sensors
 	//sends data to server
@@ -195,7 +195,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 255, 0, 0);
+	updateMotors(-255, 255, -255, 255);
 	//updateMotors(-255, 255, -255, 255);
 	//reads data from sensors
 	//sends data to server
@@ -213,7 +213,7 @@ void moveForward()
 void moveBackward()
 {
 	//moves some distance
-	updateMotors(0, 0, 0, 255);
+	updateMotors(-255, -255, -255, -255);
 	//updateMotors(-255,-255,-255,-255);
 	//reads data from sensors
 	//sends data to server
