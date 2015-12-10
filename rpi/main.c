@@ -7,9 +7,12 @@
 #define FRONT_LEFT_MOTOR_A 0
 #define FRONT_LEFT_MOTOR_B 1
 
-/*#define FRONT_RIGHT_MOTOR 1
-#define BACK_LEFT_MOTOR 2
-#define BACK_RIGHT_MOTOR 3*/
+#define FRONT_RIGHT_MOTOR_A 2
+#define FRONT_RIGHT_MOTOR_B 3
+#define BACK_LEFT_MOTOR_A 4
+#define BACK_LEFT_MOTOR_B 5
+#define BACK_RIGHT_MOTOR_A 6
+#define BACK_LEFT_MOTOR_B 7
 
 /*
 1. Reading distance
@@ -76,21 +79,58 @@ int temporaryProtocol()
 	return 1;
 }
 /*
-Updates motors. Input is in order of FL, FR, BL, BR
+Updates motors. Takes 4 numbers and updates their respective motors with the PWM value.
+If the input is negative, then we'll assume you want to reverse the direction.
 */
-void updateMotors(int frontLeftA, int frontLeftB)
+void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 {
-	softPwmWrite(FRONT_LEFT_MOTOR_A, frontLeftA);
-	softPwmWrite(FRONT_LEFT_MOTOR_B, frontLeftB);
-	//softPwmWrite(FRONT_RIGHT_MOTOR, frontRight);
-	//softPwmWrite(BACK_LEFT_MOTOR, backLeft);
-	//softPwmWrite(BACK_RIGHT_MOTOR, backRight);	
+	if(frontLeft<0)//checks if it's negative
+	{//if so
+		softPwmWrite(FRONT_LEFT_MOTOR_A, 0);//set A to 0
+		softPwmWrite(FRONT_LEFT_MOTOR_B, -frontLeft);//set B to frontLeft (positive), which is -frontLeft	
+	}
+	else
+	{//otherwise it's positive
+		softPwmWrite(FRONT_LEFT_MOTOR_A, frontLeft);//set A to frontLeft
+		softPwmWrite(FRONT_LEFT_MOTOR_B, 0);//set B to 0
+	}//same with every other motor
+	if(frontRight<0)
+	{
+		softPwmWrite(FRONT_RIGHT_MOTOR_A, 0);
+		softPwmWrite(FRONT_LEFT_MOTOR_B, -frontRight);
+	}
+	else
+	{
+		softPwmWrite(FRONT_RIGHT_MOTOR_A, frontRight);
+		softPwmWrite(FRONT_LEFT_MOTOR_B, 0);		
+	}
+	if(backLeft<0)
+	{
+		softPwmWrite(BACK_LEFT_MOTOR_A, 0);
+		softPwmWrite(BACK_LEFT_MOTOR_B, -backLeft);
+	}
+	else
+	{
+		softPwmWrite(BACK_LEFT_MOTOR_A, backLeft);
+		softPwmWrite(BACK_LEFT_MOTOR_B, 0);		
+	}
+	if(backRight<0)
+	{
+		softPwmWrite(BACK_RIGHT_MOTOR_A, 0);
+		softPwmWrite(BACK_RIGHT_MOTOR_B, -backRight);
+	}
+	else
+	{
+		softPwmWrite(BACK_RIGHT_MOTOR_A, backRight);
+		softPwmWrite(BACK_RIGHT_MOTOR_B, 0);				
+	}
+	
 }
 
 void moveLeft()
 {
 	//moves some distance
-	updateMotors(0,0);
+	updateMotors(255, -255, 255, -255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -98,7 +138,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 0);
+	updateMotors(-255, 255, -255, 255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -106,7 +146,7 @@ void moveRight()
 void moveForward()
 {
 	//moves some distance
-	updateMotors(255, 0);
+	updateMotors(255, 255, 255, 255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -114,7 +154,7 @@ void moveForward()
 void moveBackward()
 {
 	//moves some distance
-	updateMotors(0, 255);
+	updateMotors(-255,-255,-255,-255);
 	//reads data from sensors
 	//sends data to server
 }
@@ -123,5 +163,5 @@ void dontMove()
 {
 	//this method is called after reading input returns nothing.
 	//sets all pins to 0
-	updateMotors(0,0);
+	updateMotors(0, 0, 0, 0);
 }
