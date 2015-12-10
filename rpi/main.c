@@ -186,7 +186,7 @@ void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 void moveLeft()
 {
 	//moves some distance
-	updateMotors(255, 0, 0, 0);
+	updateMotors(255, -255, 255, -255);
 	//updateMotors(255, -255, 255, -255);
 	//reads data from sensors
 	//sends data to server
@@ -195,7 +195,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 255, 0, 0);
+	updateMotors(-255, 255, -255, 255);
 	//updateMotors(-255, 255, -255, 255);
 	//reads data from sensors
 	//sends data to server
@@ -213,7 +213,7 @@ void moveForward()
 void moveBackward()
 {
 	//moves some distance
-	updateMotors(0, 0, 0, 255);
+	updateMotors(-255, -255, -255, -255);
 	//updateMotors(-255,-255,-255,-255);
 	//reads data from sensors
 	//sends data to server
