@@ -9,8 +9,8 @@
 #define FRONT_LEFT_MOTOR_B 3
 #define FRONT_RIGHT_MOTOR_A 4
 #define FRONT_RIGHT_MOTOR_B 5
-#define BACK_LEFT_MOTOR_A 12
-#define BACK_LEFT_MOTOR_B 13
+#define BACK_LEFT_MOTOR_A 13
+#define BACK_LEFT_MOTOR_B 12
 #define BACK_RIGHT_MOTOR_A 27
 #define BACK_RIGHT_MOTOR_B 28
 
@@ -149,13 +149,13 @@ void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 	if(frontRight<0)
 	{
 		softPwmWrite(FRONT_RIGHT_MOTOR_A, 0);
-		softPwmWrite(FRONT_LEFT_MOTOR_B, -frontRight);
+		softPwmWrite(FRONT_RIGHT_MOTOR_B, -frontRight);
 		printf("FRONT_RIGHT_MOTOR: A = %d\tB = %d\n", 0, -frontRight);
 	}
 	else
 	{
 		softPwmWrite(FRONT_RIGHT_MOTOR_A, frontRight);
-		softPwmWrite(FRONT_LEFT_MOTOR_B, 0);		
+		softPwmWrite(FRONT_RIGHT_MOTOR_B, 0);		
 		printf("FRONT_RIGHT_MOTOR: A = %d\tB = %d\n", frontRight, 0);
 	}
 	if(backLeft<0)
@@ -187,7 +187,7 @@ void updateMotors(int frontLeft, int frontRight, int backLeft, int backRight)
 void moveLeft()
 {
 	//moves some distance
-	updateMotors(255, 0, 0, 0);
+	updateMotors(255, -255, 255, -255);
 	//updateMotors(255, -255, 255, -255);
 	//reads data from sensors
 	//sends data to server
@@ -196,7 +196,7 @@ void moveLeft()
 void moveRight()
 {
 	//moves some distance
-	updateMotors(0, 255, 0, 0);
+	updateMotors(-255, 255, -255, 255);
 	//updateMotors(-255, 255, -255, 255);
 	//reads data from sensors
 	//sends data to server
@@ -214,7 +214,7 @@ void moveForward()
 void moveBackward()
 {
 	//moves some distance
-	updateMotors(0, 0, 0, 255);
+	updateMotors(-255, -255, -255, -255);
 	//updateMotors(-255,-255,-255,-255);
 	//reads data from sensors
 	//sends data to server
